@@ -1,0 +1,49 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin
+      - DOCKER_INFLUXDB_INIT_ORG=acme
+      - DOCKER_INFLUXDB_INIT_BUCKET=acme
+
+  prometheus:
+    image: prom/prometheus:v2.20.1
+    container_name: prometheus
+    depends_on:
+      - app
+    volumes:
+      - ./env/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana:8.3.3
+    container_name: grafana
+    depends_on:
+      - prometheus
+      - influxdb
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./env/grafana.ini:/etc/grafana/grafana.ini
+    env_file:
+      - ./env/grafana.env
+
+volumes:
+  grafana-storage:
+  influxdb-storage:
