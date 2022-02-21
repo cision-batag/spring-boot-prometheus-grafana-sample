@@ -36,10 +36,9 @@ Item           | Value
 Type           | Prometheus
 URL            | http://prometheus:9090
 
-# Set up Prometheus data source
+# Set up InfluxDB data source
 
-You can login to Grafana by `admin/admin`.
-You set up prometheus data source as follows.
+You set up InfluxDB data source as follows.
 
 Item           | Value
 -------------- | -----
