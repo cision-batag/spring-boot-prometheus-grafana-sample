@@ -26,7 +26,7 @@ services:
     depends_on:
       - app
     volumes:
-      - ./env/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
 
@@ -36,13 +36,25 @@ services:
     depends_on:
       - prometheus
       - influxdb
+      - mailhog
     ports:
       - 3000:3000
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./env/grafana.ini:/etc/grafana/grafana.ini
-    env_file:
-      - ./env/grafana.env
+      - ./config/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_SERVER_DOMAIN=grafana
+      - GF_SERVER_HTTP_PORT=3000
+      - GF_SERVER_PROTOCOL=http
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    logging:
+      driver: 'none'
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
 
 volumes:
   grafana-storage:

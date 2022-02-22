@@ -14,6 +14,7 @@ public class HelloController {
     private static Counter testApiSuccessfulResponses = Metrics.counter(METRIC_NAME,
             "SERVICE_NAME", TEST_API_COMPONENT,
             "RESULT", "response_success");
+
     private static Counter testApiErrors = Metrics.counter(METRIC_NAME,
             "SERVICE_NAME", TEST_API_COMPONENT,
             "RESULT", "response_errors");

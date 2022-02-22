@@ -12,7 +12,7 @@ and docker-compose, and execute the following command:
 docker-compose up -d
 ``` 
 
-Three applications are going to start.
+The following applications are going to start:
 
 Application                 | URL
 --------------------------- |----------------------
@@ -20,16 +20,21 @@ Spring Boot Web Application | http://localhost:8080
 Prometheus                  | http://localhost:9090
 Grafana                     | http://localhost:3000
 InfluxDB                    | http://localhost:8086
+Mailhog SMTP                | http://localhost:1025
+Mailhog WEB                 | http://localhost:8025
 
 Prometheus monitors Spring Boot Application.
 Grafana visualizes prometheus data source.
+
+Mailhog is used to check alert notifications.
 
 InfluxDB is added to check compatibility with Grafana 8.
 
 # Set up Prometheus data source
 
 You can login to Grafana by `admin/admin`.
-You set up prometheus data source as follows.
+
+You set up prometheus data source as follows:
 
 Item           | Value
 -------------- | -----
@@ -38,7 +43,7 @@ URL            | http://prometheus:9090
 
 # Set up InfluxDB data source
 
-You set up InfluxDB data source as follows.
+You set up InfluxDB data source as follows:
 
 Item           | Value
 -------------- | -----
